@@ -9,6 +9,7 @@ class ContaindicationsHandler : DataHandler {
     override fun handle(document: Document): Analize =
         Analize(
             title = "Противопоказания",
-            text = "Биохимическое исследование крови (18.05.21)"
+            text = "Спиронолактон 25 мг 1 р/д - противопоказан при высоком уровне калия (5.79 ммоль/л). " +
+                    "Биохимическое исследование крови (18.05.21)"
         )
 }
