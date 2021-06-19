@@ -12,8 +12,12 @@ class DateTimeParserServiceImpl : DateTimeParserService {
 
     override fun parse(sections: List<Section>): Pair<LocalDate?, LocalTime?> {
         val content = sections.firstOrNull { it.id == SECTION_ID }?.content
+        return parseDateAndTime(content!!)
+    }
+
+    override fun parseDateAndTime(content: String): Pair<LocalDate?, LocalTime?> {
         val re = Regex("""(\d{1,2}\.\d{1,2}\.\d{1,2})\s+(\d{1,2}:\d{1,2}:\d{1,2})""")
-        val groups = re.find(content!!)?.groupValues?.drop(1) ?: emptyList()
+        val groups = re.find(content)?.groupValues?.drop(1) ?: emptyList()
         return if(groups.isNotEmpty()) {
             val date = try {
                 LocalDate.parse(groups[0], DateTimeFormatter.ofPattern("dd.MM.yy"))
