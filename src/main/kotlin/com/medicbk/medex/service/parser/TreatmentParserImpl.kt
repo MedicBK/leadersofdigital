@@ -27,7 +27,7 @@ class TreatmentParserImpl : TreatmentParser {
                         .map { drugDescr ->
                             val re = Regex("""(\W+)(.*)$""")
                             val groups = re.find(drugDescr)?.groupValues!!
-                            TreatmentType.MEDICATION to Document.Treat(groups[1], groups[2])
+                            TreatmentType.MEDICATION to Document.Treat(groups[1].lowercase(), groups[2])
                         }
                 } else {
                     fixedContent.split(Regex(";\\s?"))
