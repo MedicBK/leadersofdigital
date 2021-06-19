@@ -1,4 +1,4 @@
-package com.medicbk.medex.service
+package com.medicbk.medex.service.parser
 
 import com.medicbk.medex.model.Section
 import com.medicbk.medex.repository.SectionRep
@@ -10,7 +10,7 @@ class SectionServiceImpl : SectionService {
     @Autowired
     private lateinit var sectionRep: SectionRep
 
-    override fun parseSections(srcText: String): List<Section> {
+    override fun parse(srcText: String): List<Section> {
         val sectionRecords = sectionRep.getAll()
         val sectionsNames = sectionRecords.associate { it.id to it.name }
         // (pos -> id)

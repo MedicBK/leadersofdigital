@@ -1,11 +1,15 @@
 package com.medicbk.medex
 
 import com.medicbk.medex.repository.SectionRep
-import com.medicbk.medex.service.SectionService
+import com.medicbk.medex.service.parser.DateTimeParserService
+import com.medicbk.medex.service.parser.SectionService
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertDoesNotThrow
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 @SpringBootTest
 class SectionServiceTest {
@@ -13,6 +17,8 @@ class SectionServiceTest {
     private lateinit var sectionRep: SectionRep
     @Autowired
     private lateinit var sectionService: SectionService
+    @Autowired
+    private lateinit var dateTimeParserService: DateTimeParserService
 
     val sourceText = """
 154-4
@@ -97,11 +103,23 @@ Rg органов грудной клетки (19.05.21): Осумкованны
 """
 
     @Test
-    fun `test parseSections`() {
+    fun `test parse sections`() {
         val expectedSize = sectionRep.getAll().size
-        val blocks = sectionService.parseSections(sourceText)
+        val blocks = sectionService.parse(sourceText)
         println("blocks count = ${blocks.size}")
         blocks.forEach { println("ID = ${it.id}\nTitle = ${it.title}\nContent = ${it.content}${"=".repeat(80)}") }
         assertEquals(expectedSize, blocks.size)
+    }
+
+    @Test
+    fun `test parse date time`() {
+        val expectedDt = LocalDateTime.parse("15.04.21 10:23:27",
+            DateTimeFormatter.ofPattern("dd.MM.yy HH:mm:ss")
+        )
+        assertDoesNotThrow {
+            val sections = sectionService.parse(sourceText)
+            val dt = dateTimeParserService.parse(sections)
+            assertEquals(expectedDt, dt)
+        }
     }
 }
