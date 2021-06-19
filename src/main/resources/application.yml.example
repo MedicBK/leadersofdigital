@@ -1,5 +1,5 @@
 spring:
   datasource:
     url: "jdbc:postgresql://localhost:5432/medex"
-    username: postgres
-    password: root
+    username: medex
+    password: medex
