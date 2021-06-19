@@ -18,7 +18,7 @@ class DiagnosisClinicalParserImpl : DiagnosisClinicalParser {
             val mkb = parts[1].substring(0, mkbEnd).trimEnd()
             Document.DiagnosisClinicalField(section!!.title, mkb)
         } else {
-            return Document.DiagnosisClinicalField()
+            return Document.DiagnosisClinicalField("", "")
         }
     }
 }

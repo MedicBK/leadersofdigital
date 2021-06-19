@@ -4,5 +4,5 @@ import com.medicbk.medex.model.Section
 
 interface SectionService {
 
-    fun parse(srcText: String): List<Section>
+    fun parse(srcText: String, sectionNames: Collection<String> = emptyList()): List<Section>
 }
