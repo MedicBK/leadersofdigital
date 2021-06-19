@@ -2,6 +2,7 @@ package com.medicbk.medex
 
 import com.medicbk.medex.repository.ExamRep
 import com.medicbk.medex.repository.SectionRep
+import com.medicbk.medex.service.DocumentService
 import com.medicbk.medex.service.parser.DateTimeParserService
 import com.medicbk.medex.service.parser.ExamsParser
 import com.medicbk.medex.service.parser.SectionService
@@ -26,6 +27,8 @@ class SectionServiceTest {
     private lateinit var examRep: ExamRep
     @Autowired
     private lateinit var examsParser: ExamsParser
+    @Autowired
+    private lateinit var documentService: DocumentService
 
     val sourceText = """
 154-4
@@ -142,5 +145,11 @@ Rg органов грудной клетки (19.05.21): Осумкованны
         println("exams count = ${exams.size}")
         exams.forEach { println("ID = ${it.id}\nname = ${it.name}\nDate = ${it.date}\nTime = ${it.time}${"=".repeat(80)}") }
         assertEquals(expectedSize, exams.size)
+    }
+
+    @Test
+    fun `test doc service`() {
+        val doc = documentService.getDocument(sourceText)
+        println(doc)
     }
 }
