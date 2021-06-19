@@ -18,8 +18,9 @@ class AnalizeController {
 
     @PostMapping("/analize")
     fun analize(@RequestBody epicrisis: Epicrisis): ResponseEntity<*> =
-        analizeService.analize(epicrisis.content)
-            .let { ResponseEntity.ok(Response(Response.ok, it)) }
+        epicrisis.content.takeIf { it.isNotBlank() }
+            ?.let { content -> analizeService.analize(content).let { ResponseEntity.ok(Response(Response.ok, it)) } }
+            ?: ResponseEntity.ok(Response(Response.error, "The content must not be empty!"))
 }
 
 data class Epicrisis(

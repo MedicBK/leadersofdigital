@@ -6,7 +6,11 @@ import org.springframework.stereotype.Service
 
 @Service
 class AnalizeServiceImpl : AnalizeService {
+
+
+
     override fun analize(content: String): List<Analize> {
+
         return listOf(
             Analize(
                 title = "Клинический диагноз",
