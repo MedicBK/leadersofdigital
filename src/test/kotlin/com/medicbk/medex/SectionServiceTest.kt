@@ -8,7 +8,8 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import java.time.LocalDateTime
+import java.time.LocalDate
+import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
 @SpringBootTest
@@ -113,13 +114,17 @@ Rg органов грудной клетки (19.05.21): Осумкованны
 
     @Test
     fun `test parse date time`() {
-        val expectedDt = LocalDateTime.parse("15.04.21 10:23:27",
-            DateTimeFormatter.ofPattern("dd.MM.yy HH:mm:ss")
+        val expectedDate = LocalDate.parse("15.04.21",
+            DateTimeFormatter.ofPattern("dd.MM.yy")
+        )
+        val expectedTime = LocalTime.parse("10:23:27",
+            DateTimeFormatter.ofPattern("HH:mm:ss")
         )
         assertDoesNotThrow {
             val sections = sectionService.parse(sourceText)
             val dt = dateTimeParserService.parse(sections)
-            assertEquals(expectedDt, dt)
+            assertEquals(expectedDate, dt.first)
+            assertEquals(expectedTime, dt.second)
         }
     }
 }

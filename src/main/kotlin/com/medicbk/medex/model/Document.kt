@@ -1,9 +1,11 @@
 package com.medicbk.medex.model
 
-import java.time.LocalDateTime
+import java.time.LocalDate
+import java.time.LocalTime
 
 data class Document(
-    val dt: LocalDateTime,
+    val date: LocalDate,
+    val time: LocalTime,
     val diagnosis: DiagnosisField,
     val exams: List<Field> = emptyList(),
     val analyses: List<AnalysisField> = emptyList(),
@@ -12,7 +14,8 @@ data class Document(
     data class Field(
         val id: Long,
         val name: String,
-        val dt: LocalDateTime
+        val date: LocalDate,
+        val time: LocalTime,
     )
 
     data class DiagnosisField(
@@ -23,7 +26,8 @@ data class Document(
     data class AnalysisField(
         val id: Long,
         val name: String,
-        val dt: LocalDateTime,
+        val date: LocalDate,
+        val time: LocalTime,
         val result: String
     )
 }
