@@ -1,14 +1,18 @@
 package com.medicbk.medex
 
-import com.medicbk.medex.service.ParseService
+import com.medicbk.medex.repository.SectionRep
+import com.medicbk.medex.service.SectionService
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest
-class ParseServiceTest {
+class SectionServiceTest {
     @Autowired
-    private lateinit var parseService: ParseService
+    private lateinit var sectionRep: SectionRep
+    @Autowired
+    private lateinit var sectionService: SectionService
 
     val sourceText = """
 154-4
@@ -94,9 +98,10 @@ Rg органов грудной клетки (19.05.21): Осумкованны
 
     @Test
     fun `test parseSections`() {
-        val blocks = parseService.parseSections(sourceText)
+        val expectedSize = sectionRep.getAll().size
+        val blocks = sectionService.parseSections(sourceText)
         println("blocks count = ${blocks.size}")
         blocks.forEach { println("ID = ${it.id}\nTitle = ${it.title}\nContent = ${it.content}${"=".repeat(80)}") }
-        assert(blocks.size == 7)
+        assertEquals(expectedSize, blocks.size)
     }
 }

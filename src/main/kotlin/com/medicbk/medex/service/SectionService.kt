@@ -2,7 +2,7 @@ package com.medicbk.medex.service
 
 import com.medicbk.medex.model.Section
 
-interface ParseService {
+interface SectionService {
 
     fun parseSections(srcText: String): List<Section>
 }

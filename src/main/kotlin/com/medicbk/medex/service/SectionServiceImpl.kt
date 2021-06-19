@@ -1,30 +1,27 @@
 package com.medicbk.medex.service
 
 import com.medicbk.medex.model.Section
+import com.medicbk.medex.repository.SectionRep
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 @Service
-class ParseServiceImpl : ParseService {
-    val tmpRefBigBlocks = mapOf(
-        1L to "Клинический диагноз",
-        2L to "Сопутствующий диагноз",
-        3L to "Проведенные обследования",
-        4L to "Консультации",
-        5L to "Лечение",
-        6L to "Неврологический статус",
-        7L to "Рекомендации",
-    )
+class SectionServiceImpl : SectionService {
+    @Autowired
+    private lateinit var sectionRep: SectionRep
 
     override fun parseSections(srcText: String): List<Section> {
+        val sectionRecords = sectionRep.getAll()
+        val sectionsNames = sectionRecords.associate { it.id to it.name }
         // (pos -> id)
-        val keywordsPositions = tmpRefBigBlocks.map {
-                srcText.indexOf(it.value, ignoreCase = true) to it.key
+        val keywordsPositions = sectionRecords.map {
+                srcText.indexOf(it.name, ignoreCase = true) to it.id
             }.sortedBy { it.first }
             .filter { it.first != -1 }
 
         return keywordsPositions.indices.map { i ->
             val pos = keywordsPositions[i].first
-            val kWord = tmpRefBigBlocks[keywordsPositions[i].second]!!
+            val kWord = sectionsNames[keywordsPositions[i].second]!!
             val start = pos + kWord.length
             val end = if(i != keywordsPositions.indices.last) {
                 keywordsPositions[i + 1].first + 1
