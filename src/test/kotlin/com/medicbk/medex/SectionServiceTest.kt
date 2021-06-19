@@ -1,7 +1,9 @@
 package com.medicbk.medex
 
+import com.medicbk.medex.repository.ExamRep
 import com.medicbk.medex.repository.SectionRep
 import com.medicbk.medex.service.parser.DateTimeParserService
+import com.medicbk.medex.service.parser.ExamsParser
 import com.medicbk.medex.service.parser.SectionService
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
@@ -20,6 +22,10 @@ class SectionServiceTest {
     private lateinit var sectionService: SectionService
     @Autowired
     private lateinit var dateTimeParserService: DateTimeParserService
+    @Autowired
+    private lateinit var examRep: ExamRep
+    @Autowired
+    private lateinit var examsParser: ExamsParser
 
     val sourceText = """
 154-4
@@ -126,5 +132,15 @@ Rg органов грудной клетки (19.05.21): Осумкованны
             assertEquals(expectedDate, dt.first)
             assertEquals(expectedTime, dt.second)
         }
+    }
+
+    @Test
+    fun `test parse exams`() {
+        val sections = sectionService.parse(sourceText)
+        val expectedSize = examRep.getAll().size
+        val exams = examsParser.parse(sections)
+        println("exams count = ${exams.size}")
+        exams.forEach { println("ID = ${it.id}\nname = ${it.name}\nDate = ${it.date}\nTime = ${it.time}${"=".repeat(80)}") }
+        assertEquals(expectedSize, exams.size)
     }
 }

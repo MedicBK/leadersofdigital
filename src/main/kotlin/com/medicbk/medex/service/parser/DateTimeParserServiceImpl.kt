@@ -10,13 +10,17 @@ import java.time.format.DateTimeFormatter
 class DateTimeParserServiceImpl : DateTimeParserService {
     private val SECTION_ID = 1L
 
+    companion object {
+        val DATE_WITH_TIME_PATTERN = """(\d{1,2}\.\d{1,2}\.\d{1,2})\s*(\d{1,2}:\d{1,2}:\d{1,2})?"""
+    }
+
     override fun parse(sections: List<Section>): Pair<LocalDate?, LocalTime?> {
         val content = sections.firstOrNull { it.id == SECTION_ID }?.content
         return parseDateAndTime(content!!)
     }
 
     override fun parseDateAndTime(content: String): Pair<LocalDate?, LocalTime?> {
-        val re = Regex("""(\d{1,2}\.\d{1,2}\.\d{1,2})\s+(\d{1,2}:\d{1,2}:\d{1,2})""")
+        val re = Regex(DATE_WITH_TIME_PATTERN)
         val groups = re.find(content)?.groupValues?.drop(1) ?: emptyList()
         return if(groups.isNotEmpty()) {
             val date = try {
