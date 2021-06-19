@@ -19,6 +19,7 @@ repositories {
 
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
+	implementation("org.springframework.boot:spring-boot-starter")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	runtimeOnly("org.postgresql:postgresql")
@@ -30,26 +31,25 @@ dependencies {
 	testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 }
 
-tasks.bootJar {
-	enabled = true
-}
-
-tasks.bootRun {
-	enabled = true
-}
-
-tasks.jar {
-	enabled = true
-	exclude("**/schema.graphqls", "**/application.yml")
-}
-
-tasks.withType<KotlinCompile> {
-	kotlinOptions {
-		freeCompilerArgs = listOf("-Xjsr305=strict")
-		jvmTarget = "11"
+	tasks.bootJar {
+		enabled = true
 	}
-}
 
-tasks.withType<Test> {
-	useJUnitPlatform()
-}
+	tasks.bootRun {
+		enabled = true
+	}
+
+	tasks.jar {
+		enabled = true
+	}
+
+	tasks.withType<KotlinCompile> {
+		kotlinOptions {
+			freeCompilerArgs = listOf("-Xjsr305=strict")
+			jvmTarget = "11"
+		}
+	}
+
+	tasks.withType<Test> {
+		useJUnitPlatform()
+	}
