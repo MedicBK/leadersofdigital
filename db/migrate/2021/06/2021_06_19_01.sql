@@ -1,5 +1,7 @@
 begin;
 
+create schema if not exists ref;
+
 create table if not exists ref.section
 (
     id bigserial not null ,
