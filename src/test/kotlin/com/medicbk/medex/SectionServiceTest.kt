@@ -3,10 +3,7 @@ package com.medicbk.medex
 import com.medicbk.medex.repository.ExamRep
 import com.medicbk.medex.repository.SectionRep
 import com.medicbk.medex.service.DocumentService
-import com.medicbk.medex.service.parser.DateTimeParserService
-import com.medicbk.medex.service.parser.DiagnosisClinicalParser
-import com.medicbk.medex.service.parser.ExamsParser
-import com.medicbk.medex.service.parser.SectionService
+import com.medicbk.medex.service.parser.*
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
@@ -32,6 +29,8 @@ class SectionServiceTest {
     private lateinit var documentService: DocumentService
     @Autowired
     private lateinit var diagnosisClinicalParser: DiagnosisClinicalParser
+    @Autowired
+    private lateinit var diagnosisConcParser: DiagnosisConcParser
 
     val sourceText = """
 154-4
@@ -151,15 +150,22 @@ Rg органов грудной клетки (19.05.21): Осумкованны
     }
 
     @Test
-    fun `test doc service`() {
-        val doc = documentService.getDocument(sourceText)
-        println(doc)
-    }
-
-    @Test
     fun `test clinical diagnosis service`() {
         val sections = sectionService.parse(sourceText)
         val diagClin = diagnosisClinicalParser.parse(sections)
         println(diagClin)
+    }
+
+    @Test
+    fun `test concomitant diagnosis service`() {
+        val sections = sectionService.parse(sourceText)
+        val diagClin = diagnosisConcParser.parse(sections)
+        println(diagClin)
+    }
+
+    @Test
+    fun `test doc service`() {
+        val doc = documentService.getDocument(sourceText)
+        println(doc)
     }
 }
