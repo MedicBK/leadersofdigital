@@ -1,16 +1,13 @@
-package com.medicbk.medex.service.parser.service
+package com.medicbk.medex.service
 
-import com.medicbk.medex.service.parser.service.Analize.*
-import com.medicbk.medex.service.parser.service.Analize.Type.*
+import com.medicbk.medex.service.Analize.Item
+import com.medicbk.medex.service.Analize.Type.*
 import org.springframework.stereotype.Service
 
 @Service
 class AnalizeServiceImpl : AnalizeService {
 
-
-
     override fun analize(content: String): List<Analize> {
-
         return listOf(
             Analize(
                 title = "Клинический диагноз",
