@@ -7,12 +7,16 @@ import org.springframework.stereotype.Service
 
 @Service
 class DocumentServiceImpl : DocumentService {
+
     @Autowired
     private lateinit var sectionService: SectionService
+
     @Autowired
     private lateinit var dtService: DateTimeParserService
+
     @Autowired
     private lateinit var examsParser: ExamsParser
+
     @Autowired
     private lateinit var diabClinParser: DiagnosisClinicalParser
     @Autowired

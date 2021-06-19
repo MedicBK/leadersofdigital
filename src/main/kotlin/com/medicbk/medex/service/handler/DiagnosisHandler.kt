@@ -7,8 +7,5 @@ import org.springframework.stereotype.Component
 @Component
 class DiagnosisHandler : DataHandler {
     override fun handle(document: Document): Analize =
-        Analize(
-            title = "Клинический диагноз",
-            text = "Основной. Постоянная форма фибрилляции предсердий, тахисистолический вариант. (МКБ I48.1)"
-        )
+        with(document.diagnosisClinical) { Analize("Клинический диагноз", "$name $mkb") }
 }
