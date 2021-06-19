@@ -10,18 +10,22 @@ class SectionServiceImpl : SectionService {
     @Autowired
     private lateinit var sectionRep: SectionRep
 
-    override fun parse(srcText: String): List<Section> {
+    override fun parse(srcText: String, sectionNames: Collection<String>): List<Section> {
         val sectionRecords = sectionRep.getAll()
-        val sectionsNames = sectionRecords.associate { it.id to it.name }
+        val names = if(sectionNames.isEmpty()) {
+            sectionRecords.associate { it.id to it.name }
+        } else {
+            sectionNames.toList().associateBy { (Math.random() * 1e8).toLong() }
+        }
         // (pos -> id)
-        val keywordsPositions = sectionRecords.map {
-                srcText.indexOf(it.name, ignoreCase = true) to it.id
-            }.sortedBy { it.first }
+        val keywordsPositions = names.map {
+            srcText.indexOf(it.value, ignoreCase = true) to it.key
+        }.sortedBy { it.first }
             .filter { it.first != -1 }
 
         return keywordsPositions.indices.map { i ->
             val pos = keywordsPositions[i].first
-            val kWord = sectionsNames[keywordsPositions[i].second]!!
+            val kWord = names[keywordsPositions[i].second]!!
             val start = pos + kWord.length
             val end = if(i != keywordsPositions.indices.last) {
                 keywordsPositions[i + 1].first + 1
