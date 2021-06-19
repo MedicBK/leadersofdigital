@@ -1,6 +1,6 @@
 package com.medicbk.medex.service
 
-import com.medicbk.medex.service.Analize.Type.*
+import com.medicbk.medex.service.Analize.Type.BASE
 
 interface AnalizeService {
     fun analize(content: String): List<Analize>
