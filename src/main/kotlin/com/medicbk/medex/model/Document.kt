@@ -3,7 +3,6 @@ package com.medicbk.medex.model
 import java.time.LocalDateTime
 
 data class Document(
-    val name: String,
     val dt: LocalDateTime,
     val diagnosis: DiagnosisField,
     val exams: List<Field> = emptyList(),
