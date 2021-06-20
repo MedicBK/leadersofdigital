@@ -12,17 +12,33 @@ class QualityCriteriaHandler : DataHandler {
         val items = mutableListOf<Analize.Item>()
         val criteria = getCriteria()
 
-        val cardiologist = criteria[0]
-        document.advices.find { it.id == 1L }.let { field ->
-            val fieldTime = field?.time
+        document.advices.find { it.id == 1L }?.let { field ->
+            val fieldTime = field.time
             val docTime = document.time
-            if (docTime != null && fieldTime != null) {
-                val isDatesEquals = field.date == document.date
-                val isTimeEquals = document.time.plusMinutes(10) >= field.time
-                (isDatesEquals && isTimeEquals).let { items.add(Analize.Item(cardiologist, it)) }
+            if (docTime != null) {
+                if (fieldTime != null) {
+                    val isDatesEquals = field.date == document.date
+                    val isTimeEquals = document.time.plusMinutes(10) >= field.time
+                    (isDatesEquals && isTimeEquals).let { items.add(Analize.Item(criteria[0], it)) }
+                } else items.add(Analize.Item(criteria[0], false))
             }
+        } ?: items.add(Analize.Item(criteria[0], false))
 
-        }
+        Analize.Item(criteria[1], (document.exams.find { it.id == 3L } != null)).also { items.add(it) }
+
+        document.exams.find { it.id == 2L }?.let { field ->
+            val fieldTime = field.time
+            val docTime = document.time
+            if (docTime != null) {
+                if (fieldTime != null) {
+                    val isDatesEquals = field.date == document.date
+                    val isTimeEquals = document.time.plusMinutes(10) >= field.time
+                    (isDatesEquals && isTimeEquals).let { items.add(Analize.Item(criteria[2], it)) }
+                } else items.add(Analize.Item(criteria[2], false))
+            }
+        } ?: items.add(Analize.Item(criteria[2], false))
+
+        Analize.Item(criteria[3], false).also { items.add(it) }
 
         return Analize(
             title = "Критерии качества",
