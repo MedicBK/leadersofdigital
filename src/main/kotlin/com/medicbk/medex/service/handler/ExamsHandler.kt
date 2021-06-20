@@ -5,9 +5,11 @@ import com.medicbk.medex.repository.ExamRep
 import com.medicbk.medex.service.Analize
 import com.medicbk.medex.service.Analize.*
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.core.annotation.Order
 import org.springframework.stereotype.Component
 
 @Component
+@Order(2)
 class ExamsHandler : DataHandler {
 
     @Autowired
