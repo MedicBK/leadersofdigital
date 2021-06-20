@@ -1,6 +1,7 @@
 package com.medicbk.medex.service.handler
 
 import com.medicbk.medex.model.Document
+import com.medicbk.medex.model.TreatmentType
 import com.medicbk.medex.service.Analize
 import org.springframework.core.annotation.Order
 import org.springframework.stereotype.Component
@@ -8,8 +9,11 @@ import org.springframework.stereotype.Component
 @Component
 @Order(3)
 class DrugsHandler : DataHandler {
-    override fun handle(document: Document): Analize =
-        Analize(
+    override fun handle(document: Document): Analize {
+        val drugs = mutableListOf<Analize.Item>()
+        document.treatment[TreatmentType.MEDICATION]?.forEach {  }
+
+        return Analize(
             title = "Назначенные препараты",
             items = listOf(
                 Analize.Item("Метопролол 50 мг утром", checked = true),
@@ -21,4 +25,5 @@ class DrugsHandler : DataHandler {
             ),
             type = Analize.Type.DRUGS
         )
+    }
 }

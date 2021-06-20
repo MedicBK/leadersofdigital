@@ -15,27 +15,27 @@ class StandardsMkbHandler : DataHandler {
 
         val cardiogram = standard[0]
         document.exams.filter { it.id == 2L }.takeIf { it.isNotEmpty() }?.let { fields ->
-            Analize.Item(cardiogram.name, cardiogram.count >= fields.size).also { items.add(it) }
+            Analize.Item(cardiogram.name, fields.size >= cardiogram.count).also { items.add(it) }
         } ?: Analize.Item(cardiogram.name, false).also { items.add(it) }
 
         val blood = standard[1]
         document.exams.filter { it.id == 3L }.takeIf { it.isNotEmpty() }?.let { fields ->
-            Analize.Item(blood.name, blood.count >= fields.size).also { items.add(it) }
+            Analize.Item(blood.name, fields.size >= blood.count).also { items.add(it) }
         } ?: Analize.Item(blood.name, false).also { items.add(it) }
 
         val bloodUnfolded = standard[2]
         document.exams.filter { it.id == 3L }.takeIf { it.isNotEmpty() }?.let { fields ->
-            Analize.Item(bloodUnfolded.name, bloodUnfolded.count >= fields.size).also { items.add(it) }
+            Analize.Item(bloodUnfolded.name, fields.size >= bloodUnfolded.count).also { items.add(it) }
         } ?: Analize.Item(bloodUnfolded.name, false).also { items.add(it) }
 
         val echocardiography = standard[3]
         document.exams.filter { it.id == 1L }.takeIf { it.isNotEmpty() }?.let { fields ->
-            Analize.Item(echocardiography.name, echocardiography.count >= fields.size).also { items.add(it) }
+            Analize.Item(echocardiography.name, fields.size >= echocardiography.count).also { items.add(it) }
         } ?: Analize.Item(echocardiography.name, false).also { items.add(it) }
 
         val cardiologist = standard[4]
         document.advices.filter { it.id == 1L }.takeIf { it.isNotEmpty() }?.let { fields ->
-            Analize.Item(cardiologist.name, cardiologist.count >= fields.size).also { items.add(it) }
+            Analize.Item(cardiologist.name, fields.size >= cardiologist.count).also { items.add(it) }
         } ?: Analize.Item(cardiologist.name, false).also { items.add(it) }
 
         return Analize(
