@@ -2,12 +2,16 @@ package com.medicbk.medex.service.handler
 
 import com.medicbk.medex.model.Document
 import com.medicbk.medex.service.Analize
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.core.annotation.Order
 import org.springframework.stereotype.Component
 
 @Component
 @Order(5)
 class StandardsMkbHandler : DataHandler {
+
+    @Value("\${data.section.header.standard}")
+    private lateinit var header: String
 
     override fun handle(document: Document): Analize {
         val items = mutableListOf<Analize.Item>()
@@ -39,7 +43,7 @@ class StandardsMkbHandler : DataHandler {
         } ?: Analize.Item(cardiologist.name, false).also { items.add(it) }
 
         return Analize(
-            title = "Стандарт лечения МКБ 148.1",
+            title = header,
             items = items,
             type = Analize.Type.STANDARD
         )
