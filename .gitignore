@@ -23,3 +23,5 @@
 src/main/resources/config.yml
 src/test/java/
 src/test/resources/
+
+src/main/resources/application.yml
