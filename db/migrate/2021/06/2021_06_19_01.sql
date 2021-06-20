@@ -1,7 +1,3 @@
-drop database if exists medex;
-create database medex;
-\connect medex
-
 begin;
 
 create schema if not exists ref;
