@@ -11,18 +11,13 @@ import org.springframework.stereotype.Component
 class DrugsHandler : DataHandler {
     override fun handle(document: Document): Analize {
         val drugs = mutableListOf<Analize.Item>()
-        document.treatment[TreatmentType.MEDICATION]?.forEach {  }
+        document.treatment[TreatmentType.MEDICATION]?.forEach { treat ->
+            drugs.add(Analize.Item(text = "${treat.name} ${treat.description}", false))
+        }
 
         return Analize(
             title = "Назначенные препараты",
-            items = listOf(
-                Analize.Item("Метопролол 50 мг утром", checked = true),
-                Analize.Item("Ксарелто 20 мг 1 р/д", checked = true),
-                Analize.Item("Левофлоксацин 500 мг 1 р/д", checked = false),
-                Analize.Item("Эналаприл 10 мг 1 р/д", checked = false),
-                Analize.Item("Аторвастатин 20 мг 1 р/д", checked = false),
-                Analize.Item("Омепразол 20 мг 2 р/д", checked = false)
-            ),
+            items = drugs,
             type = Analize.Type.DRUGS
         )
     }
