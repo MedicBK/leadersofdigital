@@ -66,5 +66,6 @@ cp ./src/main/resources/application.yml.example ./src/main/resources/application
 РАЗРАБОТЧИКИ
 
 <h4>Дондуков Максим</h4>
+<a href="mailto:mdondukov@pm.me">mdondukov@pm.me</a>
 <h4>Лофицкий Вадим</h4>
 
