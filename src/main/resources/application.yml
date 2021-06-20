@@ -1,5 +1,16 @@
 spring:
   datasource:
     url: "jdbc:postgresql://localhost:5432/medex"
-    username: lexa
-    password: 12345
+    username: postgres
+    password: root
+
+data:
+  mkb: "МКБ I48.1"
+  section:
+    header:
+      drugs: "Назначенные препараты"
+      contra: "Противопоказания"
+      diag: "Клинический диагноз"
+      exams: "Проведенные обследования"
+      criteria: "Критерии качества"
+      standard: "Стандарт лечения МКБ 148.1"

@@ -2,12 +2,17 @@ package com.medicbk.medex.service.handler
 
 import com.medicbk.medex.model.Document
 import com.medicbk.medex.service.Analize
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.core.annotation.Order
 import org.springframework.stereotype.Component
 
 @Component
 @Order(4)
 class QualityCriteriaHandler : DataHandler {
+
+    @Value("\${data.section.header.criteria}")
+    private lateinit var header: String
+
     override fun handle(document: Document): Analize {
         val items = mutableListOf<Analize.Item>()
         val criteria = getCriteria()
@@ -41,7 +46,7 @@ class QualityCriteriaHandler : DataHandler {
         Analize.Item(criteria[3], false).also { items.add(it) }
 
         return Analize(
-            title = "Критерии качества",
+            title = header,
             items = items,
             type = Analize.Type.STANDARD
         )

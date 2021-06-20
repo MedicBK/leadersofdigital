@@ -5,6 +5,7 @@ import com.medicbk.medex.repository.ExamRep
 import com.medicbk.medex.service.Analize
 import com.medicbk.medex.service.Analize.*
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.core.annotation.Order
 import org.springframework.stereotype.Component
 
@@ -14,6 +15,9 @@ class ExamsHandler : DataHandler {
 
     @Autowired
     private lateinit var examRep: ExamRep
+
+    @Value("\${data.section.header.exams}")
+    private lateinit var header: String
 
     override fun handle(document: Document): Analize {
         val exams = mutableListOf<Item>()
@@ -31,7 +35,7 @@ class ExamsHandler : DataHandler {
         }
 
         return Analize(
-            title = "Проведенные обследования",
+            title = header,
             items = exams,
             type = Type.EXAMS
         )
