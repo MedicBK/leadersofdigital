@@ -68,4 +68,5 @@ cp ./src/main/resources/application.yml.example ./src/main/resources/application
 <h4>Дондуков Максим</h4>
 <a href="mailto:mdondukov@pm.me">mdondukov@pm.me</a>
 <h4>Лофицкий Вадим</h4>
+<a href="mailto:vadik.ne@gmail.com">vadik.ne@gmail.com</a>
 
