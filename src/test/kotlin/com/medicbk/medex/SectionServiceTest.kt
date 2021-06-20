@@ -31,6 +31,8 @@ class SectionServiceTest {
     private lateinit var diagnosisClinicalParser: DiagnosisClinicalParser
     @Autowired
     private lateinit var diagnosisConcParser: DiagnosisConcParser
+    @Autowired
+    private lateinit var treatmentParser: TreatmentParser
 
     val sourceText = """
 154-4
@@ -161,6 +163,13 @@ Rg органов грудной клетки (19.05.21): Осумкованны
         val sections = sectionService.parse(sourceText)
         val diagClin = diagnosisConcParser.parse(sections)
         println(diagClin)
+    }
+
+    @Test
+    fun `test treats parser service`() {
+        val sections = sectionService.parse(sourceText)
+        val treats = treatmentParser.parse(sections)
+        println("treats = $treats")
     }
 
     @Test

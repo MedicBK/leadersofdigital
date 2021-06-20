@@ -3,6 +3,11 @@ package com.medicbk.medex.model
 import java.time.LocalDate
 import java.time.LocalTime
 
+enum class TreatmentType {
+    MEDICATION,
+    SURGICAL,
+}
+
 data class Document(
     val date: LocalDate?,
     val time: LocalTime?,
@@ -10,7 +15,8 @@ data class Document(
     val diagnosisConc: DiagnosisConcField,
     val exams: List<Field> = emptyList(),
     val analyses: List<AnalysisField> = emptyList(),
-    val advices: List<Field> = emptyList()
+    val advices: List<Field> = emptyList(),
+    val treatment: Map<TreatmentType, List<Treat>> = emptyMap()
 ) {
     data class Field(
         val id: Long,
@@ -20,8 +26,8 @@ data class Document(
     )
 
     data class DiagnosisClinicalField(
-        val name: String = "Основной. Постоянная форма фибрилляции предсердий, тахисистолический вариант.",
-        val mkb: String = "МКБ I48.1",
+        val name: String,
+        val mkb: String,
     )
 
     data class DiagnosisConcField(
@@ -35,5 +41,10 @@ data class Document(
         val date: LocalDate?,
         val time: LocalTime?,
         val result: String
+    )
+
+    data class Treat(
+        val name: String,
+        val description: String,
     )
 }

@@ -2,9 +2,11 @@ package com.medicbk.medex.service.handler
 
 import com.medicbk.medex.model.Document
 import com.medicbk.medex.service.Analize
+import org.springframework.core.annotation.Order
 import org.springframework.stereotype.Component
 
 @Component
+@Order(0)
 class DiagnosisHandler : DataHandler {
     override fun handle(document: Document): Analize =
         with(document.diagnosisClinical) { Analize("Клинический диагноз", "$name $mkb") }
