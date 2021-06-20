@@ -33,6 +33,8 @@ class SectionServiceTest {
     private lateinit var diagnosisConcParser: DiagnosisConcParser
     @Autowired
     private lateinit var treatmentParser: TreatmentParser
+    @Autowired
+    private lateinit var adviceParser: AdviceParser
 
     val sourceText = """
 154-4
@@ -76,7 +78,7 @@ Rg органов грудной клетки (19.05.21): Осумкованны
  
 Консультации:
 - Офтальмолог (15.05.21). Ангиопатия сетчатки по гипертоническому типу.
-- Кардиолог 9 записей за госпитализацию (21.05.21), пульмонолог (18.05.21), колопроктолог (30.04.21). См. диагноз, рекомендации.
+- Кардиолог (21.05.21), пульмонолог (18.05.21), колопроктолог (30.04.21). См. диагноз, рекомендации.
 - Торакальный хирург (14.05.21). Правосторонний гидроторакс, субтотальный ателектаз нижней доли правого легкого, ДН 1. Произведена плевральная пункция, эвакуировано 750 мл серозного выпота.
 - Ангиохирург (14.05.21). Посттравматическая аневризма правой поверхностной височной артерии. Показаний к экстренному оперативному лечению нет. 
  
@@ -169,7 +171,18 @@ Rg органов грудной клетки (19.05.21): Осумкованны
     fun `test treats parser service`() {
         val sections = sectionService.parse(sourceText)
         val treats = treatmentParser.parse(sections)
-        println("treats = $treats")
+        treats.forEach { treat ->
+            treat.value.forEach { t ->
+                println("type = ${treat.key}, name = ${t.name}, description = ${t.description}")
+            }
+        }
+    }
+
+    @Test
+    fun `test advice parser service`() {
+        val sections = sectionService.parse(sourceText)
+        val advices = adviceParser.parse(sections)
+        println("advices = $advices")
     }
 
     @Test

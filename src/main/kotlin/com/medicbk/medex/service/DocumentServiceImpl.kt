@@ -10,17 +10,18 @@ class DocumentServiceImpl : DocumentService {
 
     @Autowired
     private lateinit var sectionService: SectionService
-
     @Autowired
     private lateinit var dtService: DateTimeParserService
-
     @Autowired
     private lateinit var examsParser: ExamsParser
-
     @Autowired
     private lateinit var diabClinParser: DiagnosisClinicalParser
     @Autowired
     private lateinit var diabConcParser: DiagnosisConcParser
+    @Autowired
+    private lateinit var treatmentParser: TreatmentParser
+    @Autowired
+    private lateinit var adviceParser: AdviceParser
 
     override fun getDocument(sourceText: String): Document {
         val sections = sectionService.parse(sourceText)
@@ -34,6 +35,21 @@ class DocumentServiceImpl : DocumentService {
         val diagnosisClinical = diabClinParser.parse(sections)
         val diagnosisConc = diabConcParser.parse(sections)
 
-        return Document(date, time, diagnosisClinical, diagnosisConc, exams)
+        val analysis = emptyList<Document.AnalysisField>()
+
+        val treatments = treatmentParser.parse(sections)
+
+        val advices = adviceParser.parse(sections)
+
+        return Document(
+            date,
+            time,
+            diagnosisClinical,
+            diagnosisConc,
+            exams,
+            analysis,
+            advices,
+            treatments,
+        )
     }
 }
