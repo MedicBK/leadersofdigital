@@ -51,7 +51,7 @@ class StandardsMkbHandler : DataHandler {
 
     private fun getStandard(): List<Requirement> =
         listOf(
-            Requirement("Регистрация электрокардиограммы, Холтеровское мониторированиесердечного ритма", 2),
+            Requirement("Регистрация электрокардиограммы, Холтеровское мониторирование сердечного ритма", 2),
             Requirement("Анализ крови биохимический", 1),
             Requirement("Общий (клинический) анализ крови развернутый", 1),
             Requirement("Эхокардиография", 1),
